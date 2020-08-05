@@ -8,7 +8,7 @@ type todoContext = {
 export const runnerMachine = Machine<todoContext>({
   initial: 'stop',
   context: {
-    user: 'mao',
+    user: 'ken',
     capacity: 0,
   },
   states: {
@@ -26,7 +26,7 @@ export const runnerMachine = Machine<todoContext>({
       }
     },
     idle: {
-      
+
     }
   },
 }, {
