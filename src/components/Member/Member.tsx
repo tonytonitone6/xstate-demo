@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 import { useMachine } from '@xstate/react';
 import { runnerMachine } from '../../machines/runnerMachine';
 
@@ -7,22 +7,25 @@ import {
   UserImg,
 } from './styles';
 
-const Member = () => {
 
-  const [state, send] = useMachine(runnerMachine);
+type IProps = {
+  capacity: number;
+  user: string;
+}
 
-  const { context: { user } } = state;
-  
+const Member: FC<IProps> = ({ capacity: mile, user }) => {
+
 
   return (
-    <Users>
+    <Users mile={mile}>
       <UserImg />
       <div>Who am i</div>
       <div>{user}</div>
+      <div>我走了{mile}步</div>
     </Users>
   );
 }
 
 
 
-export default Member;
+export default memo(Member);

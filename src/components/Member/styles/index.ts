@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 import kenImg from '../../../assets/ken.jpg';
 
-export const Users = styled.div`
+type UserProps = {
+  mile: number;
+}
+
+export const Users = styled.div<UserProps>`
   position: absolute;
   display: flex;
   flex-flow: column nowrap;
@@ -11,8 +15,9 @@ export const Users = styled.div`
   width: 200px;
   height: 150px;
   background-color: lightblue;
-  transition: all 0.5s 1s ease-in;
-  
+  transition: all 0.5s ease;
+  transform: ${props => `translateX(${props.mile}px)`};
+
   & > div {
     margin-top: 10%;
   }

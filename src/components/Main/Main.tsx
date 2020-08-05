@@ -13,22 +13,19 @@ import Member from '../Member/Member';
 import { runnerMachine } from '../../machines/runnerMachine';
 
 const Main = () => {
-
   const [state, send] = useMachine(runnerMachine, {
     actions: {
       startAction: assign({
         capacity: (ctx, evt) => {
-          console.log(ctx, '123');
-          return ctx.capacity + 1;
+          return ctx.capacity + 5;
         }
       })
     }
   });
 
-
   return (
     <Wrapper>
-      <Member />
+      <Member {...state.context} />
       <Run>
         <Btn>倒退</Btn>
         <Btn onClick={() => send('START')}>前進</Btn>
