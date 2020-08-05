@@ -15,13 +15,19 @@ export const runnerMachine = Machine<todoContext>({
     stop: {
       on: {
         START: {
-          actions: ['startAction']
+          actions: ['startAction'],
+          cond: (ctx, evt) => {
+            return ctx.capacity < 40;
+          }
         },
         ROLLBACK: {
           actions: send('BACK'),
         },
         BACK: {
-          actions: 'backAction'
+          actions: 'backAction',
+          cond: (ctx, evt) => {
+            return ctx.capacity > 0;
+          }
         }
       }
     },
