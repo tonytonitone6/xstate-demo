@@ -11,6 +11,7 @@ export const Users = styled.div`
   width: 200px;
   height: 150px;
   background-color: lightblue;
+  transition: all 0.5s 1s ease-in;
   
   & > div {
     margin-top: 10%;

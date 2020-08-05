@@ -11,12 +11,14 @@ const Member = () => {
 
   const [state, send] = useMachine(runnerMachine);
 
-  console.log(state);
+  const { context: { user } } = state;
+  
 
   return (
     <Users>
       <UserImg />
       <div>Who am i</div>
+      <div>{user}</div>
     </Users>
   );
 }

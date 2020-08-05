@@ -15,7 +15,6 @@ export const runnerMachine = Machine<todoContext>({
     stop: {
       on: {
         START: {
-          target: 'start',
           actions: ['startAction']
         }
       }
@@ -29,10 +28,4 @@ export const runnerMachine = Machine<todoContext>({
 
     }
   },
-}, {
-  actions: {
-    startAction: (ctx, evt) => {
-      console.log('ctx', ctx);
-    }
-  }
 });
