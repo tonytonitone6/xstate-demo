@@ -16,6 +16,12 @@ export const runnerMachine = Machine<todoContext>({
       on: {
         START: {
           actions: ['startAction']
+        },
+        ROLLBACK: {
+          actions: send('BACK'),
+        },
+        BACK: {
+          actions: 'backAction'
         }
       }
     },

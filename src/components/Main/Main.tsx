@@ -19,6 +19,11 @@ const Main = () => {
         capacity: (ctx, evt) => {
           return ctx.capacity + 5;
         }
+      }),
+      backAction: assign({
+        capacity: (ctx, evt) => {
+          return ctx.capacity - 5;
+        }
       })
     }
   });
@@ -27,7 +32,7 @@ const Main = () => {
     <Wrapper>
       <Member {...state.context} />
       <Run>
-        <Btn>倒退</Btn>
+        <Btn onClick={() => send('ROLLBACK')}>倒退</Btn>
         <Btn onClick={() => send('START')}>前進</Btn>
       </Run>
       <Line />
