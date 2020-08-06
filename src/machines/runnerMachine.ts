@@ -14,22 +14,40 @@ export const runnerMachine = Machine<todoContext>({
   states: {
     stop: {
       on: {
-        START: {
-          actions: ['startAction'],
-          cond: (ctx, evt) => {
-            return ctx.capacity < 40;
+        START: [
+          {
+            actions: ['startAction'],
+            cond: (ctx, evt) => {
+              return ctx.capacity < 40;
+            }
+          },
+          {
+            target: 'wait',
+            cond: (ctx, evt) => ctx.capacity >= 40,
           }
-        },
+        ],
         ROLLBACK: {
           actions: send('BACK'),
         },
-        BACK: {
-          actions: 'backAction',
-          cond: (ctx, evt) => {
-            return ctx.capacity > 0;
+        BACK: [
+          {
+            actions: 'backAction',
+            cond: (ctx, evt) => {
+              return ctx.capacity > 0;
+            }
           }
-        }
+        ]
       }
+    },
+    wait: {
+      always: [
+        {
+          target: 'speak',
+          cond: (ctx, evt) => ctx.capacity < 40,
+        },
+      ]
+    },
+    speak: {
     },
     start: {
       on: {
