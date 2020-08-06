@@ -1,15 +1,22 @@
 import { Machine, assign, send } from 'xstate';
+import { fakeData } from '../utils/fakeData';
+
 
 type todoContext = {
   user: string;
-  capacity: number,
+  capacity: number;
+  content: string;
 }
+
+const fetchData = () => fakeData().then(data => data);
+  
 
 export const runnerMachine = Machine<todoContext>({
   initial: 'stop',
   context: {
     user: 'ken',
     capacity: 0,
+    content: '',
   },
   states: {
     stop: {
@@ -61,7 +68,15 @@ export const runnerMachine = Machine<todoContext>({
     },
     start: {
       id: 'start',
-      entry: (ctx, evt) => console.log(ctx),
+      invoke: {
+        src: fetchData,
+        onDone: {
+          target: 'idle',
+          actions: assign({
+            user: (ctx, evt) => 'mao'
+          })
+        }
+      }
     },
     idle: {
 
