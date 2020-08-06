@@ -43,16 +43,25 @@ export const runnerMachine = Machine<todoContext>({
       always: [
         {
           target: 'speak',
-          cond: (ctx, evt) => ctx.capacity < 40,
+          cond: (ctx, evt) => ctx.capacity >= 40,
         },
       ]
     },
     speak: {
+      initial: 'dirtyWords',
+      states: {
+        dirtyWords: {
+          after: {
+            1000: {
+              target: '#start'
+            }
+          }
+        }
+      }
     },
     start: {
-      on: {
-        RUN: 'idle'
-      }
+      id: 'start',
+      entry: (ctx, evt) => console.log(ctx),
     },
     idle: {
 
