@@ -79,7 +79,35 @@ export const runnerMachine = Machine<todoContext>({
       }
     },
     idle: {
-
+      id: 'idle',
+      type: 'parallel',
+      states: {
+        sleep: {
+          initial: 'stillSleep',
+          states: {
+            stillSleep: {
+              on: {
+                test: {
+                }
+              }
+            }
+          }
+        },
+        wakeUp: {
+          initial: 'stillWakeUp',
+          states: {
+            stillWakeUp: {
+              on: {
+                test: { 
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    kk: {
+      
     }
   },
 });
