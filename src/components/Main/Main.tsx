@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { assign } from 'xstate';
 import { useMachine } from '@xstate/react';
 
+import Ken from '../Ken/Ken';
+
 import {
   Wrapper,
   Line,
@@ -29,37 +31,15 @@ const Main = () => {
   });
 
 
-  useEffect(() => {
-    const keyDown = (evt: KeyboardEvent) => {
-      const { keyCode } = evt;
-
-      switch (keyCode) {
-        case 68:
-          send('START');
-          break;
-      
-        default:
-          break;
-      }
-    }
-
-    if (window) {
-      window.addEventListener('keydown', keyDown);
-    }
-
-    return () => window.removeEventListener('keydown', keyDown);
-  }, [send]);
-
-  useEffect(() => {
-    console.log('state', state);
-  }, [state]);
 
   return (
     <Wrapper>
       <Member {...state.context} />
+      <Ken name={state.context.content.state.context.name} />
       <Run>
         <Btn onClick={() => send('ROLLBACK')}>倒退</Btn>
         <Btn onClick={() => send('START')}>前進</Btn>
+        <Btn onClick={() => send('Go')}>測試</Btn>
       </Run>
       <Line />
     </Wrapper>

@@ -1,11 +1,12 @@
-import { Machine, assign, send } from 'xstate';
+import { Machine, assign, send, spawn, sendUpdate } from 'xstate';
 import { fakeData } from '../utils/fakeData';
+import { kenMachine } from './kenMachine';
 
 
 type todoContext = {
   user: string;
   capacity: number;
-  content: string;
+  content: any;
 }
 
 const fetchData = () => fakeData().then(data => data);
@@ -16,7 +17,7 @@ export const runnerMachine = Machine<todoContext>({
   context: {
     user: 'ken',
     capacity: 0,
-    content: '',
+    content: {},
   },
   states: {
     stop: {
@@ -88,6 +89,7 @@ export const runnerMachine = Machine<todoContext>({
             stillSleep: {
               on: {
                 test: {
+                  target: '#kk'
                 }
               }
             }
@@ -107,7 +109,30 @@ export const runnerMachine = Machine<todoContext>({
       }
     },
     kk: {
-      
-    }
+      id: 'kk',
+      on: {
+        // Go: {
+        //   actions: assign({
+        //     content: (ctx, evt) => {
+        //       return {
+        //         ...ctx,
+        //         createRef: spawn(kenMachine),
+        //       }
+        //     }
+        //   })
+        // }
+      }
+    },
   },
+  entry: assign({
+    content: (ctx, evt) => spawn(kenMachine.withContext({name: ctx.user}), { name: 'ken', sync: true }),
+  }),
+  on: {
+    Go: {
+      actions: send({
+        type: 'GOGO',
+        name: 'ken帥帥'
+      }, { to: 'ken' }),
+    }
+  }
 });
